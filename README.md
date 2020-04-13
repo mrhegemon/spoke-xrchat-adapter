@@ -451,41 +451,123 @@
 
 
 ### deleteProject(projectId) 
+    method: "DELETE" - https://${RETICULUM_SERVER}/api/v1/projects/${projectId}
     headers = {
     "content-type": "application/json",
     authorization: `Bearer ${token}`
-    };
+    }
 
-    https://${RETICULUM_SERVER}/api/v1/projects/${projectId}
-
-    method: "DELETE", headers 
+    
 
 ### saveProject(projectId, editor, signal, showDialog, hideDialog) {
+    method: "PATCH" -  `https://${RETICULUM_SERVER}/api/v1/projects/${projectId}`
     headers = {
     "content-type": "application/json",
     authorization: `Bearer ${token}`
-    };
-
-    project = {
+    }
+    body:{
       name: editor.scene.name,
       thumbnail_file_id,
       thumbnail_file_token,
       project_file_id,
       project_file_token
     };
+    signal
 
-    const body = JSON.stringify({
-      project
-    });
-
-    `https://${RETICULUM_SERVER}/api/v1/projects/${projectId}`;
-
-    { method: "PATCH", headers, body, signal });
+    
 
 
-### async getScene(sceneId) {
-    const headers = {
+
+
+### getScene(sceneId) {
+    method: "POST" - `https://${RETICULUM_SERVER}/api/v1/scenes/${sceneId}`
+    headers = {
       "content-type": "application/json"
     };
 
-    `https://${RETICULUM_SERVER}/api/v1/scenes/${sceneId}`
+   
+
+  
+### upload(blob, onUploadProgress, signal)
+    Method POST - https://${uploadHost}:${uploadPort}/api/v1/media 
+    
+
+
+
+
+
+
+
+### async publishProject(project, editor, showDialog, hideDialog) {
+    method: "POST" - `https://${RETICULUM_SERVER}/api/v1/projects/${project.project_id}/publish`
+    headers = {
+        "content-type": "application/json",
+        authorization: `Bearer ${token}`
+    };
+    body:
+        {screenshot_file_id: screenshotId,
+        screenshot_file_token: screenshotToken,
+        model_file_id: glbId,
+        model_file_token: glbToken,
+        scene_file_id: sceneFileId,
+        scene_file_token: sceneFileToken,
+        allow_remixing: publishParams.allowRemixing,
+        allow_promotion: publishParams.allowPromotion,
+        name: publishParams.name,
+        attributions: {
+          creator: publishParams.creatorAttribution,
+          content: publishParams.contentAttributions
+        }
+
+     
+### uploadAsset(editor, file, onProgress, signal) {
+    method: "POST" -  `https://${RETICULUM_SERVER}/api/v1/projects/${projectId}/assets`,
+    headers = {
+        "content-type": "application/json",
+        authorization: `Bearer ${token}`
+    };
+    body = asset: {
+        name: file.name,
+        file_id: asset_file_id,
+        access_token: asset_access_token,
+        thumbnail_file_id,
+        thumbnail_access_token
+    }
+    signal 
+
+###  uploadProjectAsset(editor, projectId, file, onProgress, signal) {
+
+    method: "POST" -  `https://${RETICULUM_SERVER}/api/v1/projects/${projectId}/assets`,
+  
+    headers = {
+      "content-type": "application/json",
+      authorization: `Bearer ${token}`
+    };
+
+    body = {
+      asset: {
+        name: file.name,
+        file_id: asset_file_id,
+        access_token: asset_access_token,
+        thumbnail_file_id,
+        thumbnail_access_token
+      }
+    };
+    signal
+
+### deleteAsset(assetId) {
+    method: "DELETE" `https://${RETICULUM_SERVER}/api/v1/assets/${assetId}`
+    headers = {
+      "content-type": "application/json",
+      authorization: `Bearer ${token}`
+    };
+
+### deleteProjectAsset(projectId, assetId) 
+    method: "DELETE" `https://${RETICULUM_SERVER}/api/v1/projects/${projectId}/assets/${assetId}`
+    headers = {
+        "content-type": "application/json",
+        authorization: `Bearer ${token}`
+    };
+
+
+
