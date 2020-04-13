@@ -489,6 +489,3 @@
     };
 
     `https://${RETICULUM_SERVER}/api/v1/scenes/${sceneId}`
-
-  
-
